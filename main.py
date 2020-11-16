@@ -8,7 +8,7 @@ from utils.files import write_json
 from utils.format_results import format_results
 
 PRIMARY_VALIDATOR_IP = '54.183.17.224'
-
+REFERENCE_FILE = "root_account_file.json"
 
 def fetch_account_data():
     """
@@ -38,9 +38,15 @@ def run():
     now = datetime.now()
     date_time = now.strftime('%Y-%m-%d-%H:%M:%S')
     file_path = os.path.join(ACCOUNT_BACKUPS_DIR, f'{date_time}.json')
+    reference_file_path = os.path.join(ACCOUNT_BACKUPS_DIR, REFERENCE_FILE)
+    data = format_results(fetch_account_data())
     write_json(
         file=file_path,
-        data=format_results(fetch_account_data())
+        data=data
+    )
+    write_json(
+        file=reference_file_path,
+        data=data
     )
 
 
